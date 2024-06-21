@@ -12,22 +12,25 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.hnalovski.weatherforecast.navigation.WeatherNavigation
 import com.hnalovski.weatherforecast.ui.theme.WeatherForecastTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             MyApp {
-
+                WeatherNavigation()
             }
         }
     }
 }
 
 @Composable
-fun MyApp(content: () -> Unit) {
+fun MyApp(content: @Composable () -> Unit) {
     WeatherForecastTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             content()
