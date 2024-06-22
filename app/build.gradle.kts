@@ -53,15 +53,13 @@ android {
 
 dependencies {
 
-    //Dagger - Hilt
+    // Dagger - Hilt
     implementation(libs.hilt.android)
-
-    implementation (libs.androidx.hilt.lifecycle.viewmodel)
-// Dagger - Hilt
-    kapt (libs.hilt.android.compiler)
-    implementation (libs.androidx.hilt.lifecycle.viewmodel)
-    kapt (libs.androidx.hilt.compiler)
-    implementation (libs.androidx.hilt.navigation.compose)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+    kapt(libs.androidx.hilt.compiler)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // Coroutine Lifecycle Scopes
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -76,7 +74,7 @@ dependencies {
     implementation(libs.okhttp)
 
     // JSON Converter
-    implementation(libs.converter.gson)
+    implementation(libs.retrofit2.converter.gson)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
