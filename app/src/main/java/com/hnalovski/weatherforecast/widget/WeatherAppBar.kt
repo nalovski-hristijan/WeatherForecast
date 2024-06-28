@@ -45,12 +45,10 @@ fun WeatherAppBar(
         title = {
             Text(
                 text = title,
-                color = MaterialTheme.colorScheme.onSecondary,
-                style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 15.sp)
+                style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)
             )
         },
         modifier = Modifier
-            .fillMaxWidth()
             .shadow(elevation = elevation),
         colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
         navigationIcon = {
