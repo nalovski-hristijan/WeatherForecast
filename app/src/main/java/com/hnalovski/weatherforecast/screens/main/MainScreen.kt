@@ -1,19 +1,23 @@
 package com.hnalovski.weatherforecast.screens.main
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -28,15 +32,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
-import com.hnalovski.weatherforecast.R
 import com.hnalovski.weatherforecast.data.DataOrException
 import com.hnalovski.weatherforecast.model.Weather
-import com.hnalovski.weatherforecast.model.WeatherItem
 import com.hnalovski.weatherforecast.utils.formatDate
-import com.hnalovski.weatherforecast.utils.formatDateTime
 import com.hnalovski.weatherforecast.utils.formatDecimals
+import com.hnalovski.weatherforecast.widget.HumidityWindPressureRow
+import com.hnalovski.weatherforecast.widget.SunriseSunsetRow
 import com.hnalovski.weatherforecast.widget.WeatherAppBar
+import com.hnalovski.weatherforecast.widget.WeatherDetailRow
+import com.hnalovski.weatherforecast.widget.WeatherStateImage
 
 @Composable
 fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltViewModel()) {
@@ -118,94 +122,29 @@ fun MainContent(data: Weather) {
         HorizontalDivider(thickness = 2.dp)
         SunriseSunsetRow(weather = weatherItem)
 
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text(
+            text = "This week",
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold
+        )
+
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(5.dp),
+            color = Color(0xFFEEF1EF),
+            shape = RoundedCornerShape(14.dp)
+        ) {
+            LazyColumn(modifier = Modifier.padding(2.dp), contentPadding = PaddingValues(1.dp)) {
+                items(items = data.list) { item ->
+                    WeatherDetailRow(item)
+                }
+            }
+        }
+
     }
 
 
 }
-
-@Composable
-fun SunriseSunsetRow(weather: WeatherItem) {
-    Row(
-        modifier = Modifier
-            .padding(5.dp)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Row(modifier = Modifier.padding(1.dp)) {
-            Icon(
-                painter = rememberAsyncImagePainter(model = R.drawable.sunrise),
-                contentDescription = "sunrise icon"
-            )
-            Text(text = formatDateTime(weather.sunrise))
-        }
-        Row(modifier = Modifier.padding(1.dp)) {
-            Icon(
-                painter = rememberAsyncImagePainter(model = R.drawable.sunset),
-                contentDescription = "sunrise icon"
-            )
-            Text(text = formatDateTime(weather.sunset))
-        }
-    }
-}
-
-@Composable
-fun HumidityWindPressureRow(weather: WeatherItem) {
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Row(modifier = Modifier.padding(4.dp)) {
-            Icon(
-                painter = rememberAsyncImagePainter(model = R.drawable.humidity),
-                contentDescription = "humidity image",
-                modifier = Modifier.size(20.dp)
-            )
-            Text(
-                text = weather.humidity.toString() + "%",
-                style = MaterialTheme.typography.titleMedium
-            )
-        }
-
-        Row(modifier = Modifier.padding(4.dp)) {
-            Icon(
-                painter = rememberAsyncImagePainter(model = R.drawable.pressure),
-                contentDescription = "pressure image",
-                modifier = Modifier.size(20.dp)
-            )
-            Text(
-                text = weather.pressure.toString() + " Pa",
-                style = MaterialTheme.typography.titleMedium
-            )
-        }
-
-        Row(modifier = Modifier.padding(4.dp)) {
-            Icon(
-                painter = rememberAsyncImagePainter(model = R.drawable.wind),
-                contentDescription = "wind image",
-                modifier = Modifier.size(20.dp)
-            )
-            Text(
-                text = weather.gust.toString() + " kph",
-                style = MaterialTheme.typography.titleMedium
-            )
-        }
-    }
-}
-
-@Composable
-fun WeatherStateImage(imagesUrl: String) {
-    Image(
-        painter = rememberAsyncImagePainter(model = imagesUrl),
-        contentDescription = "icon image",
-        modifier = Modifier.size(80.dp)
-    )
-}
-
-
-
-
