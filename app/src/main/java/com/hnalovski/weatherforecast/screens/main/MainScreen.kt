@@ -34,6 +34,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.hnalovski.weatherforecast.data.DataOrException
 import com.hnalovski.weatherforecast.model.Weather
+import com.hnalovski.weatherforecast.navigation.WeatherScreens
 import com.hnalovski.weatherforecast.utils.formatDate
 import com.hnalovski.weatherforecast.utils.formatDecimals
 import com.hnalovski.weatherforecast.widget.HumidityWindPressureRow
@@ -43,14 +44,20 @@ import com.hnalovski.weatherforecast.widget.WeatherDetailRow
 import com.hnalovski.weatherforecast.widget.WeatherStateImage
 
 @Composable
-fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltViewModel()) {
+fun MainScreen(
+    navController: NavController,
+    viewModel: MainViewModel = hiltViewModel(),
+    city: String?
+) {
+
+    Log.d("CIT", "MainScreen: $city")
 
     val weatherData =
         produceState<DataOrException<Weather, Boolean, Exception>>(
             initialValue = DataOrException(
                 loading = true
             ), producer = {
-                value = viewModel.getWeatherData(city = "Istanbul")
+                value = viewModel.getWeatherData(city = city.toString())
             }).value
 
 
@@ -69,10 +76,11 @@ fun MainScaffold(weather: Weather, navController: NavController) {
             title = weather.city.name + " ,${weather.city.country}",
             navController = navController,
             elevation = 5.dp,
-            icon = Icons.AutoMirrored.Filled.ArrowBack
-        ) {
-            Log.d("Button", "MainScaffold: ButtonClicked")
-        }
+            icon = Icons.AutoMirrored.Filled.ArrowBack,
+            onAddAction = {
+                navController.navigate(WeatherScreens.SearchScreen.name)
+            }
+        )
     }) { innerPadding ->
         Surface(modifier = Modifier.padding(innerPadding)) {
             MainContent(data = weather)

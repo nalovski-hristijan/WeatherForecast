@@ -1,5 +1,6 @@
 package com.hnalovski.weatherforecast.screens
 
+import android.util.Log
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -33,6 +34,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(navController: NavController = NavController(LocalContext.current)) {
 
+    val defaultCity = "Bitola"
     val scale = remember {
         Animatable(0f)
     }
@@ -44,7 +46,8 @@ fun SplashScreen(navController: NavController = NavController(LocalContext.curre
 
         delay(2000L)
 
-        navController.navigate(WeatherScreens.MainScreen.name)
+        navController.navigate(WeatherScreens.MainScreen.name + "/${defaultCity}")
+        Log.d("NAV", "SplashScreen: $navController")
     })
 
     Surface(

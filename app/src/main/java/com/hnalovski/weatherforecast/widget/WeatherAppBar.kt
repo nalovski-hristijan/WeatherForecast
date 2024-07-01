@@ -56,7 +56,7 @@ fun WeatherAppBar(
                 Icon(
                     imageVector = icon,
                     contentDescription = "Arrow Back",
-                    tint = MaterialTheme.colorScheme.onSecondary,
+                    tint = Color.Black,
                     modifier = Modifier.clickable { onButtonClicked.invoke() }
                 )
             } else {
@@ -66,7 +66,7 @@ fun WeatherAppBar(
             }
         }, actions = {
             if (isMainScreen) {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = { onAddAction.invoke() }) {
                     Icon(imageVector = Icons.Default.Search, contentDescription = "Search icon")
                 }
 
