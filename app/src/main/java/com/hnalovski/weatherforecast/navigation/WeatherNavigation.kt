@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import com.hnalovski.weatherforecast.screens.SplashScreen
 import com.hnalovski.weatherforecast.screens.about.AboutScreen
 import com.hnalovski.weatherforecast.screens.favorites.FavoritesScreen
+import com.hnalovski.weatherforecast.screens.favorites.FavoritesViewModel
 import com.hnalovski.weatherforecast.screens.main.MainScreen
 import com.hnalovski.weatherforecast.screens.main.MainViewModel
 import com.hnalovski.weatherforecast.screens.search.SearchScreen
@@ -43,7 +44,8 @@ fun WeatherNavigation() {
         }
 
         composable(route = WeatherScreens.FavoriteScreen.name) {
-            FavoritesScreen(navController = navController)
+            val viewModel = hiltViewModel<FavoritesViewModel>()
+            FavoritesScreen(navController = navController, viewModel = viewModel)
         }
 
         composable(route = WeatherScreens.SettingsScreen.name) {

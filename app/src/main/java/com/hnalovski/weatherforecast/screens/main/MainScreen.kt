@@ -76,7 +76,6 @@ fun MainScaffold(weather: Weather, navController: NavController) {
             title = weather.city.name + " ,${weather.city.country}",
             navController = navController,
             elevation = 5.dp,
-            icon = Icons.AutoMirrored.Filled.ArrowBack,
             onAddAction = {
                 navController.navigate(WeatherScreens.SearchScreen.name)
             }

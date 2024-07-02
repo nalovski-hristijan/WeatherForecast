@@ -40,7 +40,7 @@ fun SearchScreen(navController: NavController) {
             icon = Icons.AutoMirrored.Filled.ArrowBack,
             isMainScreen = false
         ) {
-            navController.navigate(WeatherScreens.MainScreen.name)
+            navController.popBackStack()
         }
     }) { innerPadding ->
         Surface(
@@ -53,7 +53,7 @@ fun SearchScreen(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 SearchBar() {
-                    navController.navigate(WeatherScreens.MainScreen.name +"/$it")
+                    navController.navigate(WeatherScreens.MainScreen.name + "/$it")
                 }
             }
         }
