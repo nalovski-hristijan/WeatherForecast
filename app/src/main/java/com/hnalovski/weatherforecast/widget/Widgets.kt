@@ -30,7 +30,7 @@ import com.hnalovski.weatherforecast.utils.formatDecimals
 
 
 @Composable
-fun WeatherDetailRow(weather: WeatherItem) {
+fun WeatherDetailRow(weather: WeatherItem, unitLetter: String) {
     val imageUrl = "https://openweathermap.org/img/wn/${weather.weather[0].icon}.png"
 
     Surface(
@@ -73,14 +73,14 @@ fun WeatherDetailRow(weather: WeatherItem) {
                         fontWeight = FontWeight.SemiBold
                     )
                 ) {
-                    append(formatDecimals(weather.temp.max) + "°C")
+                    append(formatDecimals(weather.temp.max) + "°$unitLetter")
                 }
                 withStyle(
                     style = SpanStyle(
                         color = Color.LightGray
                     )
                 ) {
-                    append(formatDecimals(weather.temp.min) + "°C")
+                    append(formatDecimals(weather.temp.min) + "°$unitLetter")
                 }
             }, style = MaterialTheme.typography.titleLarge)
         }
@@ -114,7 +114,7 @@ fun SunriseSunsetRow(weather: WeatherItem) {
 }
 
 @Composable
-fun HumidityWindPressureRow(weather: WeatherItem) {
+fun HumidityWindPressureRow(weather: WeatherItem, isMetric: Boolean) {
 
     Row(
         modifier = Modifier
@@ -142,7 +142,7 @@ fun HumidityWindPressureRow(weather: WeatherItem) {
                 modifier = Modifier.size(20.dp)
             )
             Text(
-                text = weather.pressure.toString() + " Pa",
+                text = weather.pressure.toString() + if (isMetric) " Pa" else " psi",
                 style = MaterialTheme.typography.titleMedium
             )
         }
@@ -154,7 +154,7 @@ fun HumidityWindPressureRow(weather: WeatherItem) {
                 modifier = Modifier.size(20.dp)
             )
             Text(
-                text = weather.gust.toString() + " kph",
+                text = weather.gust.toString() + if (isMetric) " m/s" else " mph",
                 style = MaterialTheme.typography.titleMedium
             )
         }
